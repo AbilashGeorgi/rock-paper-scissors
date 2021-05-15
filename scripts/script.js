@@ -39,3 +39,29 @@ function getResultOfRound(playerSelection, computerSelection) {
         return "YOUU LOOOSSSEEEE. HOW DID YOU EVEN DREAM OF TRYING";
     }
 }
+
+getSelectionConst(selection) {
+    switch (selection) {
+        case 'rock':
+            return rock;
+        case 'paper':
+            return paper;
+        case 'scissors':
+            return scissors;
+        default:
+            return null;
+    }
+}
+
+function game() {
+    let playerScore = 0;
+    let computerScore = 0;
+
+    for(let i=0; i<5; i++) {
+        let playerChoice = getSelectionConst(prompt("Choose your weapon").toLowerCase());
+        if (playerChoice == null) {
+            console.log(invalid choice);
+        }
+        console.log(getResultOfRound(playerChoice,computerPlay()));
+    }
+}
