@@ -1,0 +1,37 @@
+body {
+    display: flex;
+    background-color: antiquewhite;
+    align-items: stretch;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    box-sizing: border-box;
+}
+
+.container {
+    border: 10px solid black;
+    flex-grow: 1;
+    margin: 0;
+    padding: 0;
+}
+
+.container.player {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+}
+.container.computer {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: stretch;
+}
+
+.icon {
+    border: 1px solid black;
+    flex-grow: 1;
+}
+
+.health {
+    border: 1px solid black;
+    flex-grow: 1;
+}

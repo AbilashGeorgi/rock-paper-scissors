@@ -1,0 +1,25 @@
+.options {
+    border: 1px solid black;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+button {
+    flex-grow: 1;
+    border: 0;
+    background-color: transparent;
+    font-family: 'Franklin Gothic Medium';
+    font-weight: bold;
+    font-size: large;
+}
+
+button.player-button:hover {
+    background-color: rgb(255, 99, 71, 0.5);
+}
+
+button:disabled {
+    color: black;
+    border: 0;
+    background-color: transparent;
+}

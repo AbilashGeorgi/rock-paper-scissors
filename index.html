@@ -2,9 +2,29 @@
 <html>
     <head>
         <title>Rock Paper Scissors</title>
-        <script src="./scripts/script.js"></script>
+        <link rel="stylesheet" href="./styles/style.css">
+        <link rel="stylesheet" href="./styles/options.css">
     </head>
     <body>
-
+        <div class="container player">
+            <div class="icon"></div>
+            <div class="health"></div>
+            <div class="options">
+                <button class="player-button rock">rock</button>
+                <button class="player-button paper">paper</button>
+                <button class="player-button scissors">scissors</button>
+            </div>
+        </div>
+        <div class="container board"></div>
+        <div class="container computer">
+            <div class="icon"></div>
+            <div class="health"></div>
+            <div class="options">
+                <button class="computer-button" disabled>rock</button>
+                <button class="computer-button" disabled>paper</button>
+                <button class="computer-button" disabled>scissors</button>
+            </div>
+        </div>
+        <script src="./scripts/script.js"></script>
     </body>
 </html>
