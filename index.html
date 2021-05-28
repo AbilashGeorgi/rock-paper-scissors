@@ -3,26 +3,31 @@
     <head>
         <title>Rock Paper Scissors</title>
         <link rel="stylesheet" href="./styles/style.css">
+        <link rel="stylesheet" href="./styles/health.css">
         <link rel="stylesheet" href="./styles/options.css">
     </head>
     <body>
         <div class="container player">
-            <div class="icon"></div>
-            <div class="health"></div>
+            <div class="icon">P<br/>L<br/>A<br/>Y<br/>E<br/>R</div>
+            <div class="health">
+            </div>
             <div class="options">
-                <button class="player-button rock">rock</button>
-                <button class="player-button paper">paper</button>
-                <button class="player-button scissors">scissors</button>
+                <button id="rock" class="player-button rock">rock</button>
+                <button id="paper" class="player-button paper">paper</button>
+                <button id="scissors" class="player-button scissors">scissors</button>
             </div>
         </div>
-        <div class="container board"></div>
+        <div class="container board">
+            <span>&nbsp;</span>
+        </div>
         <div class="container computer">
-            <div class="icon"></div>
-            <div class="health"></div>
+            <div class="icon">C<br/>O<br/>M<br/>P<br/>U<br/>T<br/>E<br/>R</div>
+            <div class="health">
+            </div>
             <div class="options">
-                <button class="computer-button" disabled>rock</button>
-                <button class="computer-button" disabled>paper</button>
-                <button class="computer-button" disabled>scissors</button>
+                <button class="computer-button rock" disabled>rock</button>
+                <button class="computer-button paper" disabled>paper</button>
+                <button class="computer-button scissors" disabled>scissors</button>
             </div>
         </div>
         <script src="./scripts/script.js"></script>

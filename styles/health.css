@@ -1,0 +1,20 @@
+
+.health {
+    border: 1px solid black;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.health-chunk {
+    border: 1px solid black;
+    flex-grow: 1;
+}
+
+.health-chunk.active{
+    background-color: rgb(122, 0, 0);
+}
+
+.health-chunk.inactive{
+    background-color: transparent;
+}

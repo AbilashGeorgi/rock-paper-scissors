@@ -1,20 +1,37 @@
 const rock = 'rock';
 const paper = 'paper';
 const scissors = 'scissors';
+let playerHealth = 0;
+let computerHealth = 0;
 
 //randomly plays a weapon.
 function computerPlay() {
+    resetComputerChoice();
     const selection = Math.floor(Math.random() * 3);
     switch (selection) {
         case 0:
+            displayComputerChoice(rock);
             return rock;
         case 1:
+            displayComputerChoice(paper);
             return paper;
         case 2:
+            displayComputerChoice(scissors);
             return scissors;
         default:
             return null;
     }
+}
+
+//display functions for the computer choice
+function resetComputerChoice() {
+    const button = document.querySelector(`.computer-button.highlight`);
+    if (button === null) return;
+    button.classList.remove('highlight');
+}
+function displayComputerChoice(choice) {
+    const button = document.querySelector(`.computer-button.${choice}`);
+    button.classList.add('highlight');
 }
 
 //returns the selection against which the argument passed wins.
@@ -53,59 +70,122 @@ function getSelectionConst(selection) {
     }
 }
 
-//play the game.
-function game() {
-    console.log("PREPARE TO DIE");
-    let playerHealth = 5;
-    let computerHealth = 10;
-    while (playerHealth != 0 && computerHealth != 0) {
+//fade text into the board.
+//facing issues with synchronisation
+function fadeIn(text) {
+    const characters = text.split("");
+    for (let i in characters) {
+        setTimeout(displayOnBoard.bind(null, characters[i]) , i*50);
+    }
+}
+//append the character to the board or use a new span.
+function displayOnBoard(character) {
+    const span = document.querySelector('.container.board :last-child');
+    span.innerHTML += character;
+    if (character === ' ') {
+        span.innerHTML += '&nbsp';
+        const newSpan = document.createElement('span');
+        newSpan.innerHTML = '&nbsp';
+        span.parentNode.appendChild(newSpan);
+    }
+}
+//initialise the board
+function clearBoard() {
+    const board = document.querySelector('.board');
+    board.innerHTML = '<span>&nbsp;</span>';
+}
 
-        //get the player input.
-        let playerChoiceString = window.prompt("Choose your weapon");
-        if (playerChoiceString == null) {
-            //if player cancelled.
+function populateHealthBar(character, health) {
+    const healthDiv = document.querySelector(`.${character} .health`);
+    for (let i=0; i<health; i++) {
+        healthDiv.appendChild(getNewHealthChunkElement());
+    }
+}
+
+function getNewHealthChunkElement() {
+    const newHealthChunkElement = document.createElement('div');
+    newHealthChunkElement.classList.add('health-chunk');
+    newHealthChunkElement.classList.add('active');
+    return newHealthChunkElement;
+}
+
+function removeHealthChunk(character) {
+    const healthChunk = document.querySelector(`.${character} .health-chunk.active`);
+    healthChunk.classList.remove('active');
+    healthChunk.classList.add('inactive');
+}
+
+//trying to solve sync issues.
+//class level var maybe better but that also would just be a bandaid.
+function canUseBoard() {
+    const board = document.querySelector('.board');
+    if (board.innerHTML === '<span>&nbsp;</span>') return true;
+    else return false;
+}
+
+function initialiseGame() {
+    fadeIn("CHOOSE YOUR WEAPON");
+    playerHealth = 5;
+    computerHealth = 8;
+    populateHealthBar('player', playerHealth);
+    populateHealthBar('computer', computerHealth);
+
+    const playerButtons = document.querySelectorAll('button.player-button');
+    playerButtons.forEach((button) => {
+        button.addEventListener('click', function(e) {playChoice(getSelectionConst(e.target.id));});
+    });
+}
+
+function playChoice(playerChoice) {
+    clearBoard();
+    let result = getResultOfRound(playerChoice, computerPlay());
+    switch (result) {
+        case "tie":
             break;
-        }
-
-        
-        let playerChoice = getSelectionConst(playerChoiceString);
-
-        if (playerChoice == null) {
-            //if the player selects invalid options
-            console.log("WRONG CHOICE. YOU\'LL HAVE TO DO BETTER THAN THAT.");
-            continue;
-        } else {
-            //if correct choice is chosen.
-            let result = getResultOfRound(playerChoice, computerPlay());
-            switch (result) {
-                case "tie":
-                    console.log("It is a tie. YOU GOT LUCKY");
-                    break;
-                case "lose":
-                    console.log("YOUU LOSE. WHAT DID YOU EXPECT");
-                    playerHealth--;
-                    break;
-                case "win":
-                    console.log("You Win, CELEBRATE WHILE IT LASTS...");
-                    computerHealth--;
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        //print remaining health after each round.
-        console.log(`My health ${ computerHealth > 5 ? ", You have no hope hahahhahaha " : ""}  :   ${computerHealth}`);
-        console.log(`Your health :   ${playerHealth}`);
+        case "lose":
+            playerHealth--;
+            removeHealthChunk('player');
+            break;
+        case "win":
+            computerHealth--;
+            removeHealthChunk('computer');
+            break;
+        default:
+            break;
     }
 
     if (playerHealth == 0) {
         //trash talk
-        console.log('PATHETIC');
+        fadeIn('PATHETIC');
+        endGame();
+        return;
     } else if (computerHealth == 0) {
         //excuses
-        console.log('The gods favour you');
+        fadeIn('The gods favour you');
+        endGame();
+        return;
+    }
+
+    switch (result) {
+        case "tie":
+            fadeIn("It is a tie. YOU GOT LUCKY");
+            break;
+        case "lose":
+            fadeIn("YOUU LOSE. WHAT DID YOU EXPECT");
+            break;
+        case "win":
+            fadeIn("You Win, CELEBRATE WHILE IT LASTS...");
+            break;
+        default:
+            break;
     }
 }
 
-game();
+initialiseGame();
+
+function endGame() {
+    const playerButtons = document.querySelectorAll('button.player-button');
+    playerButtons.forEach((button) => {
+        button.disabled = true;
+    });
+}
