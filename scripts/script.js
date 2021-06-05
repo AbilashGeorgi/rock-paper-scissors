@@ -73,22 +73,15 @@ function getSelectionConst(selection) {
 //fade text into the board.
 //facing issues with synchronisation
 function fadeIn(text) {
-    const characters = text.split("");
-    for (let i in characters) {
-        setTimeout(displayOnBoard.bind(null, characters[i]) , i*50);
-    }
-}
-//append the character to the board or use a new span.
-function displayOnBoard(character) {
-    const span = document.querySelector('.container.board :last-child');
-    span.innerHTML += character;
-    if (character === ' ') {
-        span.innerHTML += '&nbsp';
+    const words = text.split(" ");
+    const board = document.querySelector('.container.board');
+    for (let i in words) {
         const newSpan = document.createElement('span');
-        newSpan.innerHTML = '&nbsp';
-        span.parentNode.appendChild(newSpan);
+        newSpan.innerHTML = `&nbsp${words[i]}`;
+        board.appendChild(newSpan);
     }
 }
+
 //initialise the board
 function clearBoard() {
     const board = document.querySelector('.board');
