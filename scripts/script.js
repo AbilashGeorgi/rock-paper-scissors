@@ -2,7 +2,7 @@ const rock = 'rock';
 const paper = 'paper';
 const scissors = 'scissors';
 let playerHealth = 0;
-let computerHealth = 0;
+let computerHealth = 0; 
 
 //randomly plays a weapon.
 function computerPlay() {
@@ -71,7 +71,6 @@ function getSelectionConst(selection) {
 }
 
 //fade text into the board.
-//facing issues with synchronisation
 function fadeIn(text) {
     const words = text.split(" ");
     const board = document.querySelector('.container.board');
